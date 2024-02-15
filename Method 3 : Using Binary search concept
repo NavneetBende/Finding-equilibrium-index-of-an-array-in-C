@@ -1,0 +1,47 @@
+#include<stdio.h>
+
+void find (int arr[], int n)
+{
+  int mid = n / 2;
+  int leftSum = 0, rightSum = 0;
+
+  //calculation sum to left of mid
+  for (int i = 0; i < mid; i++){ leftSum += arr[i]; } //calculating sum to right of mid
+    for (int i = n - 1; i > mid; i--){
+    rightSum += arr[i];
+  }
+
+  //if rightsum > leftsum
+  if (rightSum > leftSum){
+    //we keep moving right until rightSum become equal or less than leftSum
+    while (rightSum > leftSum && mid < n - 1){ 
+        rightSum -= arr[mid + 1]; 
+        leftSum += arr[mid]; 
+        mid++;
+    } 
+  } 
+  else{ //we keep moving right until leftSum become equal or less than RightSum 
+      while (leftSum > rightSum && mid > 0){
+	rightSum += arr[mid];
+	leftSum -= arr[mid - 1];
+	mid--;
+    }
+  }
+
+  //check if both sum become equal
+  if (rightSum == leftSum){
+    printf("First Point of equilibrium is at index = %d\n", mid);
+    return;
+  }
+
+  printf("First Point of equilibrium is at index = -1 ");
+}
+
+int main ()
+{
+  int arr[]={4, -2, 0, 6, -4};
+  int n = sizeof(arr)/sizeof(arr[0]);
+
+  find (arr, n);
+  return 0;
+}
